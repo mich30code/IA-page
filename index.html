@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inteligencia artificial: qué es, tipos, ventajas y riesgos</title>
+<meta name="description" content="Guía clara sobre la inteligencia artificial: qué es, qué tipos existen, lo bueno, lo malo, mitos, uso responsable, quiz y glosario.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#121826; --muted:#4B5565; --line:#D5DAE4;
+  --accent:#5035E8; --accent-soft:#E7E3FF; --on-accent:#FFFFFF;
+  --good:#0B7A57; --good-soft:#DDF3EA;
+  --bad:#B4233E; --bad-soft:#FBE3E8;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0F1320; --surface:#171C2D; --ink:#EDF0F7; --muted:#A5AEC2; --line:#2B3350;
+    --accent:#9D8CFF; --accent-soft:#25214F; --on-accent:#0F1320;
+    --good:#4FD1A1; --good-soft:#13322A;
+    --bad:#FF8CA1; --bad-soft:#3A1822;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.125rem;line-height:1.7}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;letter-spacing:-0.015em}
+p{margin:0 0 1rem}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{width:min(1040px,100% - 2.5rem);margin-inline:auto}
+.sec{padding:4.5rem 0 1rem}
+.sec h2{font-size:clamp(1.9rem,4.5vw,2.8rem);margin-bottom:1rem}
+.sec .intro{max-width:62ch;color:var(--muted);margin-bottom:2rem}
+.prose{max-width:66ch}
+
+/* Navegación */
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:1.5rem;height:3.5rem}
+.brand{font-family:var(--display);font-weight:800;font-size:1.1rem;text-decoration:none;color:var(--ink);white-space:nowrap}
+.top nav{display:flex;gap:1.25rem;overflow-x:auto;scrollbar-width:none;flex:1}
+.top nav::-webkit-scrollbar{display:none}
+.top nav a{font-family:var(--display);font-weight:500;font-size:.95rem;color:var(--muted);text-decoration:none;white-space:nowrap;padding:.25rem 0}
+.top nav a:hover{color:var(--accent)}
+
+/* Hero */
+.hero{padding:4rem 0 1rem}
+.hero h1{font-size:clamp(2.4rem,7vw,4.8rem);font-weight:800;max-width:16ch}
+.hero .lead{max-width:56ch;margin:1.5rem 0 2.5rem;font-size:1.25rem;color:var(--muted)}
+.demo{background:var(--surface);border:2px solid var(--ink);border-radius:6px;padding:1.5rem;max-width:760px}
+.demo h2{font-size:1.15rem;margin-bottom:.25rem}
+.demo .hint{font-size:.95rem;color:var(--muted);margin-bottom:1.25rem}
+.sentence{font-family:var(--display);font-size:clamp(1.3rem,3.2vw,1.8rem);font-weight:700;line-height:1.3;min-height:3.6em;margin-bottom:1.25rem}
+.sentence .picked{background:var(--accent-soft);color:var(--accent);padding:0 .25em;border-radius:3px}
+.sentence .cursor{display:inline-block;width:.1em;height:1em;background:var(--accent);vertical-align:-.12em;margin-left:.1em;animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.opts{display:grid;gap:.5rem}
+.opt{position:relative;display:flex;justify-content:space-between;gap:1rem;width:100%;text-align:left;font:inherit;font-family:var(--display);font-weight:500;font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:.65rem .9rem;cursor:pointer;overflow:hidden;isolation:isolate}
+.opt::before{content:"";position:absolute;inset:0;width:var(--p);background:var(--accent-soft);z-index:-1}
+.opt:hover{border-color:var(--accent)}
+.opt .pct{font-variant-numeric:tabular-nums;color:var(--muted)}
+.demo-end{border-left:4px solid var(--accent);padding-left:1rem;margin-top:.5rem}
+.btn{font-family:var(--display);font-weight:700;font-size:1rem;background:var(--accent);color:var(--on-accent);border:0;border-radius:4px;padding:.7rem 1.2rem;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+
+/* Qué es */
+.cols{display:grid;grid-template-columns:1fr;gap:2.5rem}
+@media(min-width:860px){.cols{grid-template-columns:1.1fr .9fr}}
+.nest{display:grid;gap:.75rem;margin:1.5rem 0}
+.nest div{border:2px solid var(--ink);border-radius:6px;padding:1rem 1.2rem}
+.nest div div{margin-top:.75rem;border-color:var(--accent)}
+.nest div div div{border-color:var(--good)}
+.nest strong{font-family:var(--display);font-size:1.05rem;display:block}
+.nest span{font-size:.95rem;color:var(--muted);line-height:1.5;display:block}
+.timeline{list-style:none;margin:0;padding:0 0 0 1.25rem;border-left:3px solid var(--line)}
+.timeline li{position:relative;padding:0 0 1.4rem 1rem}
+.timeline li::before{content:"";position:absolute;left:-1.9rem;top:.55rem;width:.85rem;height:.85rem;background:var(--accent);border-radius:50%;border:3px solid var(--bg)}
+.timeline b{font-family:var(--display);font-size:1.15rem}
+.timeline p{margin:0;font-size:1rem;color:var(--muted);line-height:1.5}
+.learn{display:grid;gap:1rem;margin-top:2.5rem}
+@media(min-width:760px){.learn{grid-template-columns:repeat(3,1fr)}}
+.learn div{border-top:3px solid var(--ink);padding-top:.75rem}
+.learn h3{font-size:1.15rem;margin-bottom:.4rem}
+.learn p{font-size:1rem;color:var(--muted);line-height:1.55;margin:0}
+
+/* Tipos */
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.tab{font-family:var(--display);font-weight:700;font-size:1rem;background:transparent;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:.5rem 1.1rem;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.panel[hidden]{display:none}
+.types{display:grid;gap:1rem}
+@media(min-width:760px){.types{grid-template-columns:repeat(2,1fr)}}
+.type{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.25rem}
+.type h3{font-size:1.25rem;margin-bottom:.5rem}
+.type p{font-size:1rem;line-height:1.55;margin-bottom:.6rem}
+.type .ex{color:var(--muted);font-size:.95rem;margin:0}
+.tag{display:inline-block;font-family:var(--display);font-weight:700;font-size:.8rem;border-radius:999px;padding:.15rem .65rem;margin-bottom:.6rem}
+.tag.real{background:var(--good-soft);color:var(--good)}
+.tag.hyp{background:var(--accent-soft);color:var(--accent)}
+
+/* Bueno y malo */
+.items{display:grid;gap:1.25rem}
+@media(min-width:760px){.items{grid-template-columns:repeat(2,1fr)}}
+.item{padding:.25rem 0 .25rem 1.1rem;border-left:5px solid var(--line)}
+.item h3{font-size:1.25rem;margin-bottom:.35rem}
+.item p{font-size:1rem;line-height:1.55;margin:0;color:var(--muted)}
+.good .item{border-left-color:var(--good)}
+.good .item h3{color:var(--good)}
+.bad .item{border-left-color:var(--bad)}
+.bad .item h3{color:var(--bad)}
+
+/* Mitos */
+.myths{display:grid;gap:.75rem;max-width:760px}
+details.myth{background:var(--surface);border:1px solid var(--line);border-radius:6px}
+details.myth summary{cursor:pointer;list-style:none;font-family:var(--display);font-weight:700;font-size:1.1rem;padding:1rem 1.25rem;display:flex;justify-content:space-between;gap:1rem}
+details.myth summary::-webkit-details-marker{display:none}
+details.myth summary::after{content:"+";font-size:1.4rem;line-height:1;color:var(--accent)}
+details.myth[open] summary::after{content:"\2212"}
+details.myth .real{border-top:1px solid var(--line);padding:1rem 1.25rem;margin:0;font-size:1.02rem}
+details.myth .real b{font-family:var(--display);color:var(--good)}
+
+/* Uso responsable */
+.checks{list-style:none;padding:0;margin:0;display:grid;gap:.5rem;max-width:760px}
+.checks label{display:flex;gap:.9rem;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:.9rem 1.1rem;cursor:pointer}
+.checks input{width:1.25rem;height:1.25rem;margin-top:.3rem;accent-color:var(--accent);flex:none}
+.checks input:checked + span{color:var(--muted);text-decoration:line-through}
+.progress{font-family:var(--display);font-weight:700;margin-top:1rem}
+
+/* Quiz */
+.quiz{background:var(--surface);border:2px solid var(--ink);border-radius:6px;padding:1.5rem;max-width:760px}
+.quiz .count{font-family:var(--display);color:var(--muted);font-size:.95rem;margin-bottom:.5rem}
+.quiz h3{font-size:1.5rem;margin-bottom:1.25rem}
+.answers{display:grid;gap:.5rem}
+.ans{font:inherit;font-size:1.02rem;text-align:left;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:.75rem 1rem;cursor:pointer}
+.ans:hover:not(:disabled){border-color:var(--accent)}
+.ans:disabled{cursor:default}
+.ans.right{background:var(--good-soft);border-color:var(--good);color:var(--ink)}
+.ans.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--ink)}
+.explain{margin:1.25rem 0;padding-left:1rem;border-left:4px solid var(--accent);font-size:1rem}
+.score{font-family:var(--display);font-size:2.4rem;font-weight:800;margin-bottom:.5rem}
+
+/* Glosario */
+.search{font:inherit;font-family:var(--display);width:100%;max-width:420px;padding:.7rem 1rem;border:2px solid var(--ink);border-radius:4px;background:var(--surface);color:var(--ink);margin-bottom:1.5rem}
+.gloss{margin:0;display:grid;gap:0;max-width:760px}
+.gloss .entry{padding:1rem 0;border-top:1px solid var(--line)}
+.gloss dt{font-family:var(--display);font-weight:700;font-size:1.15rem}
+.gloss dd{margin:.25rem 0 0;font-size:1rem;color:var(--muted);line-height:1.55}
+.empty{color:var(--muted)}
+
+footer{margin-top:5rem;border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--muted);font-size:.95rem}
+footer p{max-width:70ch}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .sentence .cursor{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">IA explicada</a>
+    <nav aria-label="Secciones">
+      <a href="#que-es">Qué es</a>
+      <a href="#tipos">Tipos</a>
+      <a href="#bueno">Lo bueno</a>
+      <a href="#malo">Lo malo</a>
+      <a href="#mitos">Mitos</a>
+      <a href="#uso">Uso responsable</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#glosario">Glosario</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <h1>Inteligencia artificial: qué es, qué ofrece y qué riesgos tiene</h1>
+    <p class="lead">Una guía en español para entender cómo funciona la IA, qué tipos existen y cómo usarla con criterio.</p>
+
+    <div class="demo" id="demo">
+      <h2>Completa la frase como lo haría un modelo de lenguaje</h2>
+      <p class="hint">Un chatbot escribe palabra por palabra, eligiendo la que le parece más probable. Elige una opción. Es una simulación simplificada.</p>
+      <p class="sentence" id="sentence" aria-live="polite"></p>
+      <div class="opts" id="opts"></div>
+      <div class="demo-end" id="demo-end" hidden>
+        <p>Así funciona, en pequeño, un modelo de lenguaje: calcula probabilidades a partir de muchísimos textos y elige. No «entiende» como una persona, y por eso a veces se equivoca con total seguridad.</p>
+        <button class="btn ghost" id="demo-reset" type="button">Probar de nuevo</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ ES -->
+<section class="sec" id="que-es">
+  <div class="wrap">
+    <h2>¿Qué es la inteligencia artificial?</h2>
+    <div class="cols">
+      <div>
+        <div class="prose">
+          <p>La inteligencia artificial (IA) es la rama de la informática que crea sistemas capaces de realizar tareas que normalmente requieren inteligencia humana: reconocer imágenes, entender lenguaje, traducir, tomar decisiones o crear contenido nuevo.</p>
+          <p>No es un cerebro digital. Es software que detecta patrones en grandes cantidades de datos y los usa para hacer predicciones.</p>
+        </div>
+        <div class="nest" aria-label="Relación entre IA, machine learning y deep learning">
+          <div>
+            <strong>Inteligencia artificial</strong>
+            <span>El campo completo: cualquier sistema que imita tareas inteligentes.</span>
+            <div>
+              <strong>Aprendizaje automático (machine learning)</strong>
+              <span>Sistemas que aprenden de datos en lugar de seguir reglas escritas a mano.</span>
+              <div>
+                <strong>Aprendizaje profundo (deep learning)</strong>
+                <span>Redes neuronales de muchas capas. Están detrás de los chatbots y la generación de imágenes.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:1.25rem;font-size:1.4rem">Historia en cinco momentos</h3>
+        <ol class="timeline">
+          <li><b>1950</b><p>Alan Turing propone una prueba para decidir si una máquina puede parecer humana en una conversación.</p></li>
+          <li><b>1956</b><p>En la conferencia de Dartmouth nace el término «inteligencia artificial».</p></li>
+          <li><b>1997</b><p>Deep Blue, de IBM, vence al campeón mundial de ajedrez Garry Kasparov.</p></li>
+          <li><b>2012</b><p>El aprendizaje profundo despega al reconocer imágenes con mucha más precisión que antes.</p></li>
+          <li><b>2022</b><p>Los chatbots generativos llegan al público general y la IA entra en la vida diaria.</p></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="learn">
+      <div>
+        <h3>Aprendizaje supervisado</h3>
+        <p>Aprende con ejemplos etiquetados: miles de fotos marcadas como «gato» o «perro».</p>
+      </div>
+      <div>
+        <h3>Aprendizaje no supervisado</h3>
+        <p>Encuentra grupos y patrones por sí sola en datos sin etiquetas.</p>
+      </div>
+      <div>
+        <h3>Aprendizaje por refuerzo</h3>
+        <p>Aprende por prueba y error, recibiendo recompensas cuando acierta, como en los videojuegos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOS -->
+<section class="sec" id="tipos">
+  <div class="wrap">
+    <h2>Tipos de inteligencia artificial</h2>
+    <p class="intro">Se puede clasificar de tres maneras. Cambia de pestaña para ver cada una.</p>
+
+    <div class="tabs" role="tablist" aria-label="Clasificación de la IA">
+      <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="true">Por capacidad</button>
+      <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">Por funcionamiento</button>
+      <button class="tab" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">Por aplicación</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+      <div class="types">
+        <article class="type">
+          <span class="tag real">Existe hoy</span>
+          <h3>IA estrecha (ANI)</h3>
+          <p>Hace muy bien una tarea concreta, pero no puede salirse de ella. Toda la IA actual es de este tipo.</p>
+          <p class="ex">Ejemplos: traductores, asistentes de voz, filtros de spam, chatbots.</p>
+        </article>
+        <article class="type">
+          <span class="tag hyp">Hipotética</span>
+          <h3>IA general (AGI)</h3>
+          <p>Igualaría a una persona en cualquier tarea intelectual y podría aprender cosas nuevas por sí sola. Todavía no existe.</p>
+          <p class="ex">Ejemplo: la que aparece en la ciencia ficción.</p>
+        </article>
+        <article class="type">
+          <span class="tag hyp">Teórica</span>
+          <h3>Superinteligencia (ASI)</h3>
+          <p>Superaría a los humanos en prácticamente todo. Es un concepto teórico que se discute en filosofía y seguridad de la IA.</p>
+          <p class="ex">Ejemplo: no hay ninguno.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+      <div class="types">
+        <article class="type">
+          <span class="tag real">Existe hoy</span>
+          <h3>Máquinas reactivas</h3>
+          <p>Responden a lo que ven en el momento, sin memoria ni aprendizaje.</p>
+          <p class="ex">Ejemplo: Deep Blue jugando ajedrez.</p>
+        </article>
+        <article class="type">
+          <span class="tag real">Existe hoy</span>
+          <h3>Memoria limitada</h3>
+          <p>Usan datos recientes y entrenamiento previo para decidir.</p>
+          <p class="ex">Ejemplos: autos autónomos, chatbots, recomendaciones de video.</p>
+        </article>
+        <article class="type">
+          <span class="tag hyp">En investigación</span>
+          <h3>Teoría de la mente</h3>
+          <p>Entendería emociones, intenciones y creencias de las personas. Se investiga, pero no existe todavía.</p>
+          <p class="ex">Ejemplo: un robot que capte de verdad cómo te sientes.</p>
+        </article>
+        <article class="type">
+          <span class="tag hyp">Hipotética</span>
+          <h3>Autoconsciente</h3>
+          <p>Tendría conciencia de sí misma. Es el nivel más lejano y especulativo.</p>
+          <p class="ex">Ejemplo: no hay ninguno.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+      <div class="types">
+        <article class="type">
+          <span class="tag real">Existe hoy</span>
+          <h3>Lenguaje natural (PLN)</h3>
+          <p>Entiende y produce texto o voz humana.</p>
+          <p class="ex">Ejemplos: chatbots, traductores, dictado por voz.</p>
+        </article>
+        <article class="type">
+          <span class="tag real">Existe hoy</span>
+          <h3>Visión por computadora</h3>
+          <p>Interpreta imágenes y video.</p>
+          <p class="ex">Ejemplos: desbloqueo facial, lectura de radiografías, cámaras de autos.</p>
+        </article>
+        <article class="type">
+          <span class="tag real">Existe hoy</span>
+          <h3>IA generativa</h3>
+          <p>Crea contenido nuevo a partir de lo que aprendió: texto, imágenes, audio, video o código.</p>
+          <p class="ex">Ejemplos: generadores de imágenes, asistentes de programación.</p>
+        </article>
+        <article class="type">
+          <span class="tag real">Existe hoy</span>
+          <h3>Sistemas de recomendación</h3>
+          <p>Predicen qué te va a gustar según tu historial y el de otras personas.</p>
+          <p class="ex">Ejemplos: plataformas de series, música y redes sociales.</p>
+        </article>
+        <article class="type">
+          <span class="tag real">Existe hoy</span>
+          <h3>Robótica inteligente</h3>
+          <p>Combina IA con máquinas que se mueven e interactúan con el mundo físico.</p>
+          <p class="ex">Ejemplos: robots de almacén, aspiradoras autónomas.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LO BUENO -->
+<section class="sec good" id="bueno">
+  <div class="wrap">
+    <h2>Lo bueno de la IA</h2>
+    <p class="intro">Usada con criterio, la IA ahorra tiempo, amplía capacidades y ayuda a resolver problemas difíciles.</p>
+    <div class="items">
+      <div class="item"><h3>Salud</h3><p>Ayuda a detectar enfermedades en estudios de imagen y a acelerar la búsqueda de nuevos medicamentos.</p></div>
+      <div class="item"><h3>Educación</h3><p>Permite explicaciones adaptadas al ritmo de cada estudiante y facilita la traducción de materiales.</p></div>
+      <div class="item"><h3>Trabajo y productividad</h3><p>Automatiza tareas repetitivas para dedicar más tiempo a lo que requiere criterio humano.</p></div>
+      <div class="item"><h3>Accesibilidad</h3><p>Subtítulos automáticos, lectores de pantalla y voz a texto abren herramientas a más personas.</p></div>
+      <div class="item"><h3>Ciencia y medio ambiente</h3><p>Predice el clima, modela estructuras de proteínas y ayuda a optimizar el uso de energía.</p></div>
+      <div class="item"><h3>Creatividad</h3><p>Sirve de apoyo para diseñar, componer, escribir y programar, siempre como herramienta y no como sustituto.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LO MALO -->
+<section class="sec bad" id="malo">
+  <div class="wrap">
+    <h2>Lo malo de la IA</h2>
+    <p class="intro">Los riesgos son reales y conviene conocerlos para poder reducirlos.</p>
+    <div class="items">
+      <div class="item"><h3>Desinformación</h3><p>Los deepfakes y los textos falsos se pueden producir a gran escala y con apariencia creíble.</p></div>
+      <div class="item"><h3>Sesgos y discriminación</h3><p>Si los datos de entrenamiento son injustos, la IA repite y amplifica esas injusticias.</p></div>
+      <div class="item"><h3>Privacidad</h3><p>Muchos sistemas dependen de datos personales, lo que abre la puerta a vigilancia y mal uso.</p></div>
+      <div class="item"><h3>Empleo</h3><p>Algunas tareas y oficios se automatizan, lo que exige reentrenarse y adaptarse.</p></div>
+      <div class="item"><h3>Dependencia y errores</h3><p>Confiar sin revisar debilita el pensamiento crítico. Además, la IA puede «alucinar»: inventar datos con mucha seguridad.</p></div>
+      <div class="item"><h3>Impacto ambiental</h3><p>Entrenar y operar modelos grandes consume mucha energía y agua.</p></div>
+      <div class="item"><h3>Seguridad y estafas</h3><p>Se usa para fraudes con voz clonada, correos de phishing más convincentes y ciberataques.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MITOS -->
+<section class="sec" id="mitos">
+  <div class="wrap">
+    <h2>Mitos y realidad</h2>
+    <p class="intro">Toca cada afirmación para ver qué hay de cierto.</p>
+    <div class="myths">
+      <details class="myth"><summary>«La IA piensa y siente como una persona»</summary><p class="real"><b>Realidad:</b> procesa datos con matemáticas. Puede imitar emociones en un texto, pero no hay evidencia de que tenga conciencia o sentimientos.</p></details>
+      <details class="myth"><summary>«Si la IA lo dice, es verdad»</summary><p class="real"><b>Realidad:</b> puede equivocarse e inventar datos, fuentes o citas con total seguridad. Hay que verificar.</p></details>
+      <details class="myth"><summary>«La IA va a reemplazar todos los trabajos»</summary><p class="real"><b>Realidad:</b> automatiza sobre todo tareas, no profesiones completas. Cambiará muchos empleos y creará otros, pero la transición puede ser difícil para algunas personas.</p></details>
+      <details class="myth"><summary>«La IA es objetiva porque es una máquina»</summary><p class="real"><b>Realidad:</b> aprende de datos creados por humanos y puede heredar sus sesgos.</p></details>
+      <details class="myth"><summary>«La IA es algo completamente nuevo»</summary><p class="real"><b>Realidad:</b> el campo existe desde 1956. Lo nuevo es la potencia de los equipos, la cantidad de datos y que ahora cualquiera puede usarla.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- USO RESPONSABLE -->
+<section class="sec" id="uso">
+  <div class="wrap">
+    <h2>Cómo usar la IA con responsabilidad</h2>
+    <p class="intro">Marca los hábitos que ya practicas.</p>
+    <ul class="checks" id="checks">
+      <li><label><input type="checkbox"><span>Verifico los datos importantes en fuentes confiables.</span></label></li>
+      <li><label><input type="checkbox"><span>No comparto contraseñas ni datos personales o de otras personas.</span></label></li>
+      <li><label><input type="checkbox"><span>Indico cuándo usé IA en un trabajo o tarea.</span></label></li>
+      <li><label><input type="checkbox"><span>La uso para aprender, no solo para copiar respuestas.</span></label></li>
+      <li><label><input type="checkbox"><span>Reviso si el resultado tiene sesgos o estereotipos.</span></label></li>
+      <li><label><input type="checkbox"><span>Reviso qué hace la herramienta con mis datos antes de usarla.</span></label></li>
+    </ul>
+    <p class="progress" id="checks-progress" aria-live="polite">0 de 6 hábitos marcados</p>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="sec" id="quiz">
+  <div class="wrap">
+    <h2>Pon a prueba lo que aprendiste</h2>
+    <p class="intro">Seis preguntas con explicación después de cada respuesta.</p>
+    <div class="quiz" id="quiz-box"></div>
+  </div>
+</section>
+
+<!-- GLOSARIO -->
+<section class="sec" id="glosario">
+  <div class="wrap">
+    <h2>Glosario</h2>
+    <label for="gloss-search" class="intro" style="display:block;margin-bottom:.5rem">Busca un término</label>
+    <input class="search" id="gloss-search" type="search" placeholder="Por ejemplo: sesgo" autocomplete="off">
+    <dl class="gloss" id="gloss"></dl>
+    <p class="empty" id="gloss-empty" hidden>No hay términos que coincidan con tu búsqueda.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Contenido con fines educativos. La IA cambia rápido: si usas esta información para un trabajo, confirma los datos recientes en fuentes oficiales.</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- Demo: completar la frase ---------- */
+(function(){
+  var steps = [
+    {text:"La inteligencia artificial aprende a partir de", opts:[["datos",58],["ejemplos",26],["experiencia",14],["magia",2]]},
+    {text:"y después usa los patrones para", opts:[["predecir",47],["clasificar",31],["generar",19],["adivinar",3]]},
+    {text:"pero siempre necesita", opts:[["supervisión humana",44],["buenos datos",33],["mucha energía",20],["vacaciones",3]]}
+  ];
+  var i = 0, picked = [];
+  var sentence = document.getElementById("sentence");
+  var opts = document.getElementById("opts");
+  var end = document.getElementById("demo-end");
+
+  function render(){
+    var html = "";
+    for (var k = 0; k < picked.length; k++){
+      html += steps[k].text + ' <span class="picked">' + picked[k] + "</span> ";
+    }
+    if (i < steps.length){
+      html += steps[i].text + ' <span class="cursor" aria-hidden="true"></span>';
+    } else {
+      html = html.trim() + ".";
+    }
+    sentence.innerHTML = html;
+
+    opts.innerHTML = "";
+    if (i < steps.length){
+      steps[i].opts.forEach(function(o){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "opt";
+        b.style.setProperty("--p", o[1] + "%");
+        b.innerHTML = "<span>" + o[0] + '</span><span class="pct">' + o[1] + " %</span>";
+        b.addEventListener("click", function(){ picked.push(o[0]); i++; render(); });
+        opts.appendChild(b);
+      });
+      end.hidden = true;
+    } else {
+      end.hidden = false;
+    }
+  }
+  document.getElementById("demo-reset").addEventListener("click", function(){ i = 0; picked = []; render(); });
+  render();
+})();
+
+/* ---------- Pestañas ---------- */
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  function select(tab){
+    tabs.forEach(function(t){
+      var on = t === tab;
+      t.setAttribute("aria-selected", on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+  }
+  tabs.forEach(function(t, idx){
+    t.addEventListener("click", function(){ select(t); });
+    t.addEventListener("keydown", function(e){
+      var n = null;
+      if (e.key === "ArrowRight") n = tabs[(idx + 1) % tabs.length];
+      if (e.key === "ArrowLeft") n = tabs[(idx - 1 + tabs.length) % tabs.length];
+      if (n){ select(n); n.focus(); e.preventDefault(); }
+    });
+  });
+})();
+
+/* ---------- Hábitos ---------- */
+(function(){
+  var boxes = document.querySelectorAll("#checks input");
+  var out = document.getElementById("checks-progress");
+  function update(){
+    var n = 0;
+    boxes.forEach(function(b){ if (b.checked) n++; });
+    out.textContent = n + " de " + boxes.length + " hábitos marcados" + (n === boxes.length ? ". ¡Buen uso de la IA!" : "");
+  }
+  boxes.forEach(function(b){ b.addEventListener("change", update); });
+})();
+
+/* ---------- Quiz ---------- */
+(function(){
+  var questions = [
+    {q:"¿Qué tipo de IA existe hoy?", a:["IA estrecha (ANI)","IA general (AGI)","Superinteligencia (ASI)","IA autoconsciente"], c:0,
+     e:"Toda la IA actual es estrecha: hace tareas concretas muy bien, pero no es general ni tiene conciencia."},
+    {q:"¿Qué es el aprendizaje automático (machine learning)?", a:["Programar cada regla a mano","Sistemas que aprenden patrones a partir de datos","Un robot con cuerpo humano","Un tipo de internet más rápido"], c:1,
+     e:"En lugar de seguir reglas fijas, el sistema ajusta su comportamiento según los datos con los que se entrena."},
+    {q:"¿Qué es una «alucinación» en IA?", a:["Una imagen borrosa","Un virus informático","Una respuesta falsa presentada con seguridad","Un error de conexión"], c:2,
+     e:"Los modelos pueden inventar datos, fuentes o citas que suenan creíbles. Por eso hay que verificar."},
+    {q:"¿Cómo puede aparecer un sesgo en un modelo de IA?", a:["Por los datos con los que se entrena","Porque la máquina tiene prejuicios propios","Solo si se conecta a internet","Nunca: las máquinas son neutrales"], c:0,
+     e:"Si los datos reflejan desigualdades humanas, el modelo puede aprenderlas y repetirlas."},
+    {q:"¿Qué es un deepfake?", a:["Un antivirus avanzado","Contenido falso generado con IA que imita a una persona real","Una red social","Un tipo de videojuego"], c:1,
+     e:"Puede ser video, audio o imagen. Se usa para bromas, pero también para estafas y desinformación."},
+    {q:"¿Cuál es una buena práctica al usar IA?", a:["Copiar y pegar sin revisar","Compartir mis contraseñas para que me ayude","Verificar la información en fuentes confiables","Confiar siempre en la primera respuesta"], c:2,
+     e:"Revisar lo que produce la IA y proteger tus datos es la base de un uso responsable."}
+  ];
+  var box = document.getElementById("quiz-box");
+  var idx = 0, score = 0;
+
+  function ask(){
+    var q = questions[idx];
+    box.innerHTML = '<p class="count">Pregunta ' + (idx + 1) + " de " + questions.length + "</p><h3></h3>" +
+      '<div class="answers"></div><div id="feedback" aria-live="polite"></div>';
+    box.querySelector("h3").textContent = q.q;
+    var list = box.querySelector(".answers");
+    q.a.forEach(function(text, n){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "ans"; b.textContent = text;
+      b.addEventListener("click", function(){ answer(n); });
+      list.appendChild(b);
+    });
+  }
+
+  function answer(n){
+    var q = questions[idx];
+    var btns = box.querySelectorAll(".ans");
+    btns.forEach(function(b, k){
+      b.disabled = true;
+      if (k === q.c) b.classList.add("right");
+      else if (k === n) b.classList.add("wrong");
+    });
+    if (n === q.c) score++;
+    var last = idx === questions.length - 1;
+    var fb = document.getElementById("feedback");
+    fb.innerHTML = '<p class="explain"><strong>' + (n === q.c ? "Correcto. " : "No exactamente. ") + "</strong></p>" +
+      '<button class="btn" type="button" id="next">' + (last ? "Ver resultado" : "Siguiente pregunta") + "</button>";
+    fb.querySelector(".explain").appendChild(document.createTextNode(q.e));
+    var next = document.getElementById("next");
+    next.addEventListener("click", function(){ if (last) finish(); else { idx++; ask(); } });
+    next.focus();
+  }
+
+  function finish(){
+    var msg = score === questions.length ? "Resultado perfecto. Ya dominas lo básico de la IA."
+      : score >= 4 ? "Muy bien. Repasa las secciones de las preguntas que fallaste."
+      : "Buen comienzo. Vuelve a leer las secciones y prueba otra vez.";
+    box.innerHTML = '<p class="score">' + score + " de " + questions.length + "</p><p>" + msg + '</p><button class="btn" type="button" id="retry">Intentar de nuevo</button>';
+    document.getElementById("retry").addEventListener("click", function(){ idx = 0; score = 0; ask(); });
+  }
+  ask();
+})();
+
+/* ---------- Glosario ---------- */
+(function(){
+  var terms = [
+    ["Algoritmo","Conjunto de pasos ordenados para resolver un problema o realizar una tarea."],
+    ["Aprendizaje automático (machine learning)","Técnica en la que un sistema aprende patrones a partir de datos en lugar de seguir reglas escritas a mano."],
+    ["Aprendizaje profundo (deep learning)","Tipo de aprendizaje automático que usa redes neuronales con muchas capas."],
+    ["Alucinación","Respuesta falsa o inventada que un modelo presenta como si fuera cierta."],
+    ["AGI (inteligencia artificial general)","IA hipotética capaz de realizar cualquier tarea intelectual humana."],
+    ["Datos de entrenamiento","Información (textos, imágenes, audios) con la que se enseña a un modelo."],
+    ["Deepfake","Video, audio o imagen falsos creados con IA que imitan a una persona real."],
+    ["Entrenamiento","Proceso en el que un modelo ajusta sus parámetros viendo muchos ejemplos."],
+    ["IA generativa","IA que crea contenido nuevo: texto, imágenes, audio, video o código."],
+    ["Modelo","Programa entrenado que recibe una entrada y produce una predicción o una respuesta."],
+    ["Modelo de lenguaje (LLM)","Modelo entrenado con enormes cantidades de texto para entender y generar lenguaje humano."],
+    ["Procesamiento del lenguaje natural (PLN)","Área de la IA que trabaja con el lenguaje humano escrito y hablado."],
+    ["Prompt","Instrucción o pregunta que se le escribe a una IA generativa."],
+    ["Red neuronal","Sistema inspirado de forma muy simplificada en el cerebro, formado por capas de nodos conectados."],
+    ["Sesgo","Tendencia injusta de un modelo, normalmente heredada de los datos con los que se entrenó."],
+    ["Visión por computadora","Área de la IA que permite interpretar imágenes y video."]
+  ];
+  var dl = document.getElementById("gloss");
+  var empty = document.getElementById("gloss-empty");
+  var input = document.getElementById("gloss-search");
+
+  function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+
+  function render(filter){
+    var f = norm(filter || "");
+    dl.innerHTML = "";
+    var shown = 0;
+    terms.forEach(function(t){
+      if (f && norm(t[0] + " " + t[1]).indexOf(f) === -1) return;
+      var wrap = document.createElement("div");
+      wrap.className = "entry";
+      var dt = document.createElement("dt"); dt.textContent = t[0];
+      var dd = document.createElement("dd"); dd.textContent = t[1];
+      wrap.appendChild(dt); wrap.appendChild(dd);
+      dl.appendChild(wrap);
+      shown++;
+    });
+    empty.hidden = shown !== 0;
+  }
+  input.addEventListener("input", function(){ render(input.value); });
+  render("");
+})();
+</script>
+</body>
+</html>
